@@ -1,0 +1,81 @@
+package de.sirswiperlpp.templatePlugin.Main;
+
+import de.sirswiperlpp.templatePlugin.SQL.MySQL;
+import de.sirswiperlpp.templatePlugin.Utils.Language;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+import java.io.File;
+
+public final class Main extends JavaPlugin {
+
+
+    private static Main instance;
+    public static FileConfiguration config;
+    public static Language language;
+    public static JedisPool jedisPool;
+
+    public void loadConfiguration() {
+        File datafolder = this.getDataFolder();
+        File configFile = new File(datafolder + File.separator + "config.yml");
+
+        if (!configFile.exists()) {
+            this.saveResource("config.yml", false);
+        }
+
+        config = YamlConfiguration.loadConfiguration(configFile);
+    }
+
+    public Main() {
+        instance = this;
+        language = new Language(new File(getDataFolder(), "lang.ini"));
+    }
+
+    public static Main getInstance() {
+        return instance;
+    }
+
+    private void checkAndCreateLanguageFile() {
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdirs();
+        }
+
+        File languageFile = new File(getDataFolder(), "lang.ini");
+        if (!languageFile.exists()) {
+            getLogger().info("language.ini not found. Creating...");
+
+            saveResource("lang.ini", true);
+        }
+    }
+
+    @Override
+    public void onEnable() {
+        checkAndCreateLanguageFile();
+        loadConfiguration();
+
+        MySQL.connect();
+
+        JedisPoolConfig config = new JedisPoolConfig();
+
+        jedisPool = new JedisPool(
+                config,
+                getConfig().getString("redis.host"),
+                getConfig().getInt("redis.port"),
+                2000,
+                getConfig().getString("redis.pass")
+        );
+
+        PluginManager pm = getServer().getPluginManager();
+    }
+
+    @Override
+    public void onDisable()
+    {
+        MySQL.disconnect();
+        jedisPool.close();
+    }
+}
