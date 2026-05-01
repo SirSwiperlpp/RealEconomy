@@ -1,7 +1,11 @@
-package de.sirswiperlpp.templatePlugin.Main;
+package de.sirswiperlpp.realeconomy.Main;
 
-import de.sirswiperlpp.templatePlugin.SQL.MySQL;
-import de.sirswiperlpp.templatePlugin.Utils.Language;
+import de.sirswiperlpp.realeconomy.Commands.EcoCommand;
+import de.sirswiperlpp.realeconomy.Commands.PayCommand;
+import de.sirswiperlpp.realeconomy.Listener.PlayerListener;
+import de.sirswiperlpp.realeconomy.Provider.EcoProvider;
+import de.sirswiperlpp.realeconomy.SQL.MySQL;
+import de.sirswiperlpp.realeconomy.Utils.Language;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -10,6 +14,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.io.File;
+import java.sql.SQLException;
 
 public final class Main extends JavaPlugin {
 
@@ -59,6 +64,12 @@ public final class Main extends JavaPlugin {
 
         MySQL.connect();
 
+        try {
+            EcoProvider.createEcoTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         JedisPoolConfig config = new JedisPoolConfig();
 
         jedisPool = new JedisPool(
@@ -70,6 +81,10 @@ public final class Main extends JavaPlugin {
         );
 
         PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new PlayerListener(), this);
+
+        getCommand("pay").setExecutor(new PayCommand());
+        getCommand("eco").setExecutor(new EcoCommand());
     }
 
     @Override

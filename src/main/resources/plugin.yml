@@ -1,4 +1,12 @@
-name: #PLACEHOLDER
+name: RealEconomy
 version: '1.0'
-main: #PLACEHOLDER
+main: de.sirswiperlpp.realeconomy.Main.Main
 api-version: '1.21'
+
+commands:
+  pay:
+    description: The Pay command
+    permission: pay.use
+  eco:
+    description: The Eco command
+    permission: eco.use

@@ -1,7 +1,7 @@
-package de.sirswiperlpp.templatePlugin.SQL;
+package de.sirswiperlpp.realeconomy.SQL;
 
-import de.sirswiperlpp.templatePlugin.Main.Main;
-import de.sirswiperlpp.templatePlugin.Utils.Language;
+import de.sirswiperlpp.realeconomy.Main.Main;
+import de.sirswiperlpp.realeconomy.Utils.Language;
 
 import java.io.File;
 import java.sql.Connection;

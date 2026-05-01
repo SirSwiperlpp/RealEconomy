@@ -1,4 +1,4 @@
-package de.sirswiperlpp.templatePlugin.Utils;
+package de.sirswiperlpp.realeconomy.Utils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
