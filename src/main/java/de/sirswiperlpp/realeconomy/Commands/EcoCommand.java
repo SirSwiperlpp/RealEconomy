@@ -11,6 +11,9 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class EcoCommand implements CommandExecutor
 {
@@ -35,7 +38,12 @@ public class EcoCommand implements CommandExecutor
 
                 int coin_balance = EcoProvider.readCoinsFromSQL(p.getUniqueId());
                 int shard_balance = EcoProvider.readShardsFromSQL(p.getUniqueId());
-                p.sendMessage(language.get("prefix") + language.translateString("current.balance", String.valueOf(coin_balance), String.valueOf(shard_balance)));
+
+                DecimalFormat formatter = new DecimalFormat("#,###");
+                formatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY));
+                String formatted = formatter.format(coin_balance);
+
+                p.sendMessage(language.get("prefix") + language.translateString("current.balance", String.valueOf(formatted), String.valueOf(shard_balance)));
                 return true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);

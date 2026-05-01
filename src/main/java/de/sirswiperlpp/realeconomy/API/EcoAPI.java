@@ -3,10 +3,14 @@ package de.sirswiperlpp.realeconomy.API;
 import de.sirswiperlpp.realeconomy.Main.Main;
 import de.sirswiperlpp.realeconomy.Provider.EcoProvider;
 import de.sirswiperlpp.realeconomy.Utils.Language;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class EcoAPI
 {
@@ -29,12 +33,14 @@ public class EcoAPI
             if (amount < 5)
             {
                 sender.sendMessage(language.get("prefix") + language.get("input.negative.pay"));
+                sender.playSound(sender, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                 return;
             }
 
             if (sender_balance < amount)
             {
                 sender.sendMessage(language.get("prefix") + language.get("balance.negative"));
+                sender.playSound(sender, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                 return;
             }
 
@@ -44,8 +50,13 @@ public class EcoAPI
             EcoProvider.updateCoins(sender.getUniqueId(), new_sender_balance);
             EcoProvider.updateCoins(target.getUniqueId(), new_target_balance);
 
-            sender.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(new_sender_balance)));
-            target.sendMessage(language.get("prefix") + language.translateString("coins.updated.p", sender.getName(), String.valueOf(amount)));
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            formatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY));
+            String formatted_sender = formatter.format(new_sender_balance);
+            String formatted_target = formatter.format(amount);
+
+            sender.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(formatted_sender)));
+            target.sendMessage(language.get("prefix") + language.translateString("coins.updated.p", sender.getName(), String.valueOf(formatted_target)));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -59,13 +70,19 @@ public class EcoAPI
             if (coins <= 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("input.negative"));
+                player.playSound(player, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                 return;
             }
 
             int new_balance = current_balance + coins;
 
             EcoProvider.updateCoins(player.getUniqueId(), new_balance);
-            player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(new_balance)));
+
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            formatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY));
+            String formatted = formatter.format(new_balance);
+
+            player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(formatted)));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,6 +96,7 @@ public class EcoAPI
             if (coins <= 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("input.negative"));
+                player.playSound(player, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                 return false;
             }
 
@@ -87,11 +105,17 @@ public class EcoAPI
             if (new_balance < 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("balance.negative"));
+                player.playSound(player, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                 return false;
             }
 
             EcoProvider.updateCoins(player.getUniqueId(), new_balance);
-            player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(new_balance)));
+
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            formatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY));
+            String formatted = formatter.format(new_balance);
+
+            player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(formatted)));
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -106,13 +130,19 @@ public class EcoAPI
             if (shards <= 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("input.negative"));
+                player.playSound(player, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                 return;
             }
 
             int new_balance = current_balance + shards;
 
             EcoProvider.updateCoins(player.getUniqueId(), new_balance);
-            player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(new_balance)));
+
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            formatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY));
+            String formatted = formatter.format(new_balance);
+
+            player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(formatted)));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -126,6 +156,7 @@ public class EcoAPI
             if (shards <= 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("input.negative"));
+                player.playSound(player, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                 return false;
             }
 
@@ -134,11 +165,17 @@ public class EcoAPI
             if (new_balance < 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("balance.negative"));
+                player.playSound(player, Sound.ENTITY_VILLAGER_NO, 1f, 1f);
                 return false;
             }
 
             EcoProvider.updateCoins(player.getUniqueId(), new_balance);
-            player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(new_balance)));
+
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            formatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY));
+            String formatted = formatter.format(new_balance);
+
+            player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(formatted)));
             return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
