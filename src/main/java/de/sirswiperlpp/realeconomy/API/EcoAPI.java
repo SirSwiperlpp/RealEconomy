@@ -71,7 +71,7 @@ public class EcoAPI
         }
     }
 
-    public static void removeCoins(Player player, int coins)
+    public static boolean removeCoins(Player player, int coins)
     {
         try {
             int current_balance = EcoProvider.readCoinsFromSQL(player.getUniqueId());
@@ -79,7 +79,7 @@ public class EcoAPI
             if (coins <= 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("input.negative"));
-                return;
+                return false;
             }
 
             int new_balance = current_balance - coins;
@@ -87,11 +87,12 @@ public class EcoAPI
             if (new_balance < 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("balance.negative"));
-                return;
+                return false;
             }
 
             EcoProvider.updateCoins(player.getUniqueId(), new_balance);
             player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(new_balance)));
+            return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -117,7 +118,7 @@ public class EcoAPI
         }
     }
 
-    public static void removeShards(Player player, int shards)
+    public static boolean removeShards(Player player, int shards)
     {
         try {
             int current_balance = EcoProvider.readCoinsFromSQL(player.getUniqueId());
@@ -125,7 +126,7 @@ public class EcoAPI
             if (shards <= 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("input.negative"));
-                return;
+                return false;
             }
 
             int new_balance = current_balance - shards;
@@ -133,11 +134,12 @@ public class EcoAPI
             if (new_balance < 0)
             {
                 player.sendMessage(language.get("prefix") + language.get("balance.negative"));
-                return;
+                return false;
             }
 
             EcoProvider.updateCoins(player.getUniqueId(), new_balance);
             player.sendMessage(language.get("prefix") + language.translateString("coins.updated", String.valueOf(new_balance)));
+            return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
