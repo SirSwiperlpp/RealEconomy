@@ -11,11 +11,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class PayCommand implements CommandExecutor
 {
 
     static Language language = new Language(new File(Main.getInstance().getDataFolder(), "lang.ini"));
+    public static HashMap<UUID, Long> blocked = new HashMap<UUID, Long>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -51,7 +54,13 @@ public class PayCommand implements CommandExecutor
             return true;
         }
 
+        if (blocked.containsKey(p.getUniqueId()) && System.currentTimeMillis() - blocked.get(p.getUniqueId()) < 5000) {
+            p.sendMessage(language.get("prefix") + language.get("action.blocked"));
+            return true;
+        }
+
         EcoAPI.sendCoins(p, target, amount);
+        blocked.put(p.getUniqueId(), System.currentTimeMillis());
         return true;
     }
 
