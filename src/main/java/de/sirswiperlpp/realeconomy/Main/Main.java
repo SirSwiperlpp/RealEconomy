@@ -5,6 +5,7 @@ import de.sirswiperlpp.realeconomy.Commands.PayCommand;
 import de.sirswiperlpp.realeconomy.Listener.PlayerListener;
 import de.sirswiperlpp.realeconomy.Provider.EcoProvider;
 import de.sirswiperlpp.realeconomy.SQL.MySQL;
+import de.sirswiperlpp.realeconomy.TabComplition.PayTab;
 import de.sirswiperlpp.realeconomy.Utils.Language;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -84,6 +85,7 @@ public final class Main extends JavaPlugin {
         pm.registerEvents(new PlayerListener(), this);
 
         getCommand("pay").setExecutor(new PayCommand());
+        getCommand("pay").setTabCompleter(new PayTab());
         getCommand("eco").setExecutor(new EcoCommand());
     }
 
