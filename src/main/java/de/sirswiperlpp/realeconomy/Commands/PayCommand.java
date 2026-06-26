@@ -5,6 +5,7 @@ import de.sirswiperlpp.realeconomy.Main.Main;
 import de.sirswiperlpp.realeconomy.Utils.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,6 +32,13 @@ public class PayCommand implements CommandExecutor
         }
 
         Player p = (Player) sender;
+
+        if (!p.hasPermission("eco.pay"))
+        {
+            p.sendMessage(language.get("prefix") + language.get("no.perm"));
+            p.playSound(p, Sound.ENTITY_VILLAGER_NO, 1, 1);
+            return true;
+        }
 
         if (args.length < 2)
         {
