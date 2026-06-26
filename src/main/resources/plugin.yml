@@ -17,8 +17,8 @@ permissions:
   eco.use:
     default: true
   eco.admin.set:
-    default: false
+    default: op
     description: allows permitted to set coins and shards
   eco.admin:
-    default: false
+    default: op
     description: generic admin permission

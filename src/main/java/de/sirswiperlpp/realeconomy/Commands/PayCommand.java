@@ -33,9 +33,9 @@ public class PayCommand implements CommandExecutor
 
         Player p = (Player) sender;
 
-        if (!p.hasPermission("eco.pay"))
+        if (!p.hasPermission("pay.use"))
         {
-            p.sendMessage(language.get("prefix") + language.get("no.perm"));
+            p.sendMessage(language.get("prefix") + language.translateString("no.perm", "pay.use"));
             p.playSound(p, Sound.ENTITY_VILLAGER_NO, 1, 1);
             return true;
         }
@@ -58,11 +58,11 @@ public class PayCommand implements CommandExecutor
 
         if (target == null)
         {
-            p.sendMessage(language.get("prefix") + language.translateString("player.offline"));
+            p.sendMessage(language.get("prefix") + language.translateString("player.offline", raw_target));
             return true;
         }
 
-        if (blocked.containsKey(p.getUniqueId()) && System.currentTimeMillis() - blocked.get(p.getUniqueId()) < 5000) {
+        if (blocked.containsKey(p.getUniqueId()) && System.currentTimeMillis() - blocked.get(p.getUniqueId()) < 2000) {
             p.sendMessage(language.get("prefix") + language.get("action.blocked"));
             return true;
         }

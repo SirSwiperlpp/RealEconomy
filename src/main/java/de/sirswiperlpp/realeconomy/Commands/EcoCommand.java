@@ -55,7 +55,7 @@ public class EcoCommand implements CommandExecutor
 
             if (!p.hasPermission("eco.admin.set"))
             {
-                p.sendMessage(language.get("prefix") + language.get("no.perm"));
+                p.sendMessage(language.get("prefix") + language.translateString("no.perm", "eco.admin.set"));
                 p.playSound(p, Sound.ENTITY_VILLAGER_NO, 1, 1);
                 return true;
             }
