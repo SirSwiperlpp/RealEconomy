@@ -18,6 +18,11 @@ public class EcoTab implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
         List<String> completions = new ArrayList<>();
 
+        if (!sender.hasPermission("eco.admin"))
+        {
+            return completions;
+        }
+
         if (args.length == 1) {
             StringUtil.copyPartialMatches(args[0], Collections.singletonList("set"), completions);
         }
