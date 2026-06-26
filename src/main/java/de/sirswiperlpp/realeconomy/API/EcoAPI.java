@@ -17,6 +17,24 @@ public class EcoAPI
 
     static Language language = new Language(new File(Main.getInstance().getDataFolder(), "lang.ini"));
 
+    public static int getCoinBalance(Player player)
+    {
+        try {
+            return EcoProvider.readCoinsFromSQL(player.getUniqueId());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static int getShardBalance(Player player)
+    {
+        try {
+            return EcoProvider.readShardsFromSQL(player.getUniqueId());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void sendCoins(Player sender, Player target, int amount)
     {
         try {

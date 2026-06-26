@@ -1,9 +1,12 @@
 package de.sirswiperlpp.realeconomy.Commands;
 
+import de.sirswiperlpp.realeconomy.API.EcoAPI;
 import de.sirswiperlpp.realeconomy.Main.Main;
 import de.sirswiperlpp.realeconomy.Provider.EcoProvider;
 import de.sirswiperlpp.realeconomy.Utils.Language;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,8 +51,63 @@ public class EcoCommand implements CommandExecutor
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        }
+        } else if (args[0].equalsIgnoreCase("set")) {
 
+            if (!p.hasPermission("eco.admin.set"))
+            {
+                p.sendMessage(language.get("prefix") + language.get("no.perm"));
+                p.playSound(p, Sound.ENTITY_VILLAGER_NO, 1, 1);
+                return true;
+            }
+
+            if (args.length == 4)
+            {
+
+                Player target = Bukkit.getPlayer(args[1]);
+                int amount;
+
+                if (target == null)
+                {
+                    p.sendMessage(language.get("prefix") + language.translateString("player.offline", args[1].toLowerCase()));
+                    return true;
+                }
+
+                switch (args[2].toLowerCase())
+                {
+                    case "coins":
+                        try {
+                            amount = Integer.parseInt(args[3]);
+                        } catch (NumberFormatException e) {
+                            amount = EcoAPI.getCoinBalance(target);
+                        }
+
+                        try {
+                            EcoProvider.updateCoins(target.getUniqueId(), amount);
+                            p.sendMessage(language.get("prefix") + language.translateString("coins.set", target.getName(), String.valueOf(amount)));
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        break;
+
+                    case "shard":
+                        try {
+                            amount = Integer.parseInt(args[3]);
+                        } catch (NumberFormatException e) {
+                            amount = EcoAPI.getShardBalance(target);
+                        }
+
+                        try {
+                            EcoProvider.updateShards(target.getUniqueId(), amount);
+                            p.sendMessage(language.get("prefix") + language.translateString("shards.set", target.getName(), String.valueOf(amount)));
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                        break;
+                }
+
+            }
+
+        }
         return true;
     }
 

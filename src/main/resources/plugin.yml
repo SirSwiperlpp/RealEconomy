@@ -10,3 +10,15 @@ commands:
   eco:
     description: The Eco command
     permission: eco.use
+
+permissions:
+  pay.use:
+    default: true
+  eco.use:
+    default: true
+  eco.admin.set:
+    default: false
+    description: allows permitted to set coins and shards
+  eco.admin:
+    default: false
+    description: generic admin permission
