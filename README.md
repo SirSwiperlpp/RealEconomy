@@ -26,6 +26,13 @@ Other plugins can integrate with RealEconomy:
 ```java
 // Add coins
 EcoAPI.addCoins(player, 500);
+EcoAPI.removeCoins(player, 500);
+EcoAPI.getCoinBalancce(player);
+
+// Shards
+EcoAPI.addShards(player, 10);
+EcoAPI.removeShards(player, 10);
+EcoAPI.getShardBalance(player);
 
 // Remove coins (returns false if balance insufficient)
 boolean success = EcoAPI.removeCoins(player, 200);
@@ -33,8 +40,7 @@ boolean success = EcoAPI.removeCoins(player, 200);
 // Transfer between players
 EcoAPI.sendCoins(sender, target, 100);
 
-// Shards
-EcoAPI.addShards(player, 10);
+
 ```
 
 ## Requirements
