@@ -136,7 +136,7 @@ public class EcoAPI
 
             int new_balance = current_balance + shards;
 
-            EcoProvider.updateCoins(player.getUniqueId(), new_balance);
+            EcoProvider.updateShards(player.getUniqueId(), new_balance);
 
             DecimalFormat formatter = new DecimalFormat("#,###");
             formatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY));
@@ -169,7 +169,7 @@ public class EcoAPI
                 return false;
             }
 
-            EcoProvider.updateCoins(player.getUniqueId(), new_balance);
+            EcoProvider.updateShards(player.getUniqueId(), new_balance);
 
             DecimalFormat formatter = new DecimalFormat("#,###");
             formatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY));
