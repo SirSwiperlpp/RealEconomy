@@ -89,6 +89,8 @@ public final class Main extends JavaPlugin {
         getCommand("pay").setTabCompleter(new PayTab());
         getCommand("eco").setExecutor(new EcoCommand());
         getCommand("eco").setTabCompleter(new EcoTab());
+
+        sendBrand();
     }
 
     @Override
@@ -96,5 +98,19 @@ public final class Main extends JavaPlugin {
     {
         MySQL.disconnect();
         jedisPool.close();
+    }
+
+    private void sendBrand()
+    {
+        getLogger().info("");
+        getLogger().info(" ____  _____ ");
+        getLogger().info("|  _ \\| ____|");
+        getLogger().info("| |_) |  _|  ");
+        getLogger().info("|  _ <| |___ ");
+        getLogger().info("|_| \\_\\_____|");
+        getLogger().info("");
+        getLogger().info("  Realityrift Studios");
+        getLogger().info("  built with \u2764\uFE0F");
+        getLogger().info("");
     }
 }
