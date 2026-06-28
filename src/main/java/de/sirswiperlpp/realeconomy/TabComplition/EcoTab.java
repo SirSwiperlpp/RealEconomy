@@ -30,7 +30,6 @@ public class EcoTab implements TabCompleter {
         if (args.length == 2 && args[0].equalsIgnoreCase("set")) {
             List<String> players = new ArrayList<>();
             for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p == sender) continue;
                 players.add(p.getName());
             }
             StringUtil.copyPartialMatches(args[1], players, completions);

@@ -89,7 +89,7 @@ public class EcoCommand implements CommandExecutor
                         }
                         break;
 
-                    case "shard":
+                    case "shards":
                         try {
                             amount = Integer.parseInt(args[3]);
                         } catch (NumberFormatException e) {
