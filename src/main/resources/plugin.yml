@@ -1,5 +1,5 @@
 name: RealEconomy
-version: '1.0'
+version: '1.0.3'
 main: de.sirswiperlpp.realeconomy.Main.Main
 api-version: '1.21'
 

@@ -105,6 +105,8 @@ public class EcoCommand implements CommandExecutor
                         break;
                 }
 
+            } else {
+                p.sendMessage(language.get("prefix") + language.get("usage"));
             }
 
         }
